@@ -4,23 +4,26 @@ public class Dentista {
 
     private Integer id;
     private String nome;
-    private String sobrenome;
-    private Integer matricula;
+    private String email;
+    private Integer numMatricula;
+    private Integer atendeConvenio;
 
     public Dentista() {
     }
 
-    public Dentista(Integer id, String nome, String sobrenome, Integer matricula) {
+    public Dentista(Integer id, String nome, String email, Integer numMatricula, Integer atendeConvenio) {
         this.id = id;
         this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.matricula = matricula;
+        this.email = email;
+        this.numMatricula = numMatricula;
+        this.atendeConvenio = atendeConvenio;
     }
 
-    public Dentista(String nome, String sobrenome, Integer matricula) {
+    public Dentista(String nome, String email, Integer numMatricula, Integer atendeConvenio) {
         this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.matricula = matricula;
+        this.email = email;
+        this.numMatricula = numMatricula;
+        this.atendeConvenio = atendeConvenio;
     }
 
     public Integer getId() {
@@ -39,20 +42,28 @@ public class Dentista {
         this.nome = nome;
     }
 
-    public String getSobrenome() {
-        return sobrenome;
+    public String getEmail() {
+        return email;
     }
 
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Integer getMatricula() {
-        return matricula;
+    public Integer getNumMatricula() {
+        return numMatricula;
     }
 
-    public void setMatricula(Integer matricula) {
-        this.matricula = matricula;
+    public void setNumMatricula(Integer numMatricula) {
+        this.numMatricula = numMatricula;
+    }
+
+    public Integer getAtendeConvenio() {
+        return atendeConvenio;
+    }
+
+    public void setAtendeConvenio(Integer atendeConvenio) {
+        this.atendeConvenio = atendeConvenio;
     }
 
     @Override
@@ -60,9 +71,9 @@ public class Dentista {
         return "Dentista{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", sobrenome='" + sobrenome + '\'' +
-                ", matricula=" + matricula +
+                ", email='" + email + '\'' +
+                ", numMatricula=" + numMatricula +
+                ", atendeConvenio=" + atendeConvenio +
                 '}';
     }
-
 }
