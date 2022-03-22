@@ -4,10 +4,7 @@ import com.dhbrasil.springboot.aula21.dao.IDao;
 import com.dhbrasil.springboot.aula21.dao.config.ConfigJDBC;
 import com.dhbrasil.springboot.aula21.model.Dentista;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +78,22 @@ public class DentistaDaoH2 implements IDao<Dentista> {
     // Atualizar
 
     // Excluir
+    @Override
+    public void excluir(Integer id) {
+        Connection conn = configJDBC.connectToDB();
+        Statement st = null;
+        String query = String.format("DELETE FROM dentistas WHERE " +
+                "id = '%s';", id);
+        try {
+            st = conn.createStatement();
+            st.executeUpdate(query);
+            st.close();
+            conn.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     //
 

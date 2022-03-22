@@ -22,4 +22,8 @@ public class DentistaService {
         return dentistaIDao.buscarTodos();
     }
 
+    public void excluir(Integer id) {
+        dentistaIDao.excluir(id);
+    }
+
 }

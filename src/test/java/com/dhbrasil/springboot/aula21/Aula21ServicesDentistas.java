@@ -3,6 +3,7 @@ package com.dhbrasil.springboot.aula21;
 import com.dhbrasil.springboot.aula21.dao.impl.DentistaDaoH2;
 import com.dhbrasil.springboot.aula21.model.Dentista;
 import com.dhbrasil.springboot.aula21.service.DentistaService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,6 +19,7 @@ class Aula21ServicesDentistas {
 	void contextLoads() {
 	}
 
+	@Disabled
 	@Test
 	public void carregarTresDentistas() {
 		Dentista d1 = new Dentista(
@@ -32,10 +34,17 @@ class Aula21ServicesDentistas {
 		dentistaService.salvar(d3);
 	}
 
+	@Disabled
 	@Test
 	public void listarTodosOsDentistas() {
 		List<Dentista> dentistasList = dentistaService.buscarTodos();
 		System.out.println(dentistasList);
+	}
+
+	@Disabled
+	@Test
+	public void excluirDentistaComId2() {
+		dentistaService.excluir(2);
 	}
 
 }

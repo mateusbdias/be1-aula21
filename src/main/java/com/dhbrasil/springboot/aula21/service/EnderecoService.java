@@ -22,4 +22,8 @@ public class EnderecoService {
         return enderecoIDao.buscarTodos();
     }
 
+    public void excluir(Integer id) {
+        enderecoIDao.excluir(id);
+    }
+
 }
