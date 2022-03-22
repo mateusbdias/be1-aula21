@@ -41,7 +41,7 @@ class Aula21ServicesUsuarios {
 		System.out.println(usuariosList);
 	}
 
-	// @Disabled
+	@Disabled
 	@Test
 	public void excluirUsuarioComId1() {
 		usuarioService.excluir(1);
