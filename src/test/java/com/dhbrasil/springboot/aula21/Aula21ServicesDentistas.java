@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class Aula21ServicesDentistas {
@@ -45,6 +46,24 @@ class Aula21ServicesDentistas {
 	@Test
 	public void excluirDentistaComId2() {
 		dentistaService.excluir(2);
+	}
+
+	@Disabled
+	@Test
+	public void buscarDentistaComId1() {
+		Optional<Dentista> d = dentistaService.buscar(1);
+		System.out.println(d);
+	}
+
+	@Disabled
+	@Test
+	public void atualizarDentistaComId3() {
+		Dentista dentAt = new Dentista(
+				3, "Marcia Dantas Moraes",
+				"dentista@dantas.com.br",
+				44127, 0);
+		Dentista dentUp = dentistaService.atualizar(dentAt);
+		System.out.println(dentUp);
 	}
 
 }

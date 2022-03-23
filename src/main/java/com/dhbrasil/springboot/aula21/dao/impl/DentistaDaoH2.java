@@ -7,6 +7,7 @@ import com.dhbrasil.springboot.aula21.model.Dentista;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DentistaDaoH2 implements IDao<Dentista> {
 
@@ -49,6 +50,33 @@ public class DentistaDaoH2 implements IDao<Dentista> {
     }
 
     // Buscar por ID
+    @Override
+    public Optional<Dentista> buscar(Integer id) {
+        Connection conn = configJDBC.connectToDB();
+        Statement st = null;
+
+        String query = String.format(
+                "SELECT id, nome, email, numMatricula, atendeConvenio " +
+                "FROM dentistas WHERE id = '%s';", id);
+        Dentista dentista = null;
+
+        try {
+            st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                dentista = criarObjetoDentista(rs);
+            }
+            st.close();
+            conn.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dentista != null ? Optional.of(dentista) : Optional.empty();
+        // Utilizamos o método .of quando temos certeza que o objeto tem dados
+        // O método .empty retorna como vazio
+        // Estes métodos do Objeto Optional<T> servem para evitar o NullPointerException
+    }
 
     // Buscar todos os registros
     @Override
@@ -76,6 +104,21 @@ public class DentistaDaoH2 implements IDao<Dentista> {
     }
 
     // Atualizar
+    @Override
+    public Dentista atualizar(Dentista dentista) {
+        Connection conn = configJDBC.connectToDB();
+        String query = String.format(
+                "UPDATE dentistas SET nome = '%s', email = '%s', " +
+                "numMatricula = '%s', atendeConvenio = '%s' " +
+                "WHERE id = '%s';",
+                dentista.getNome(),
+                dentista.getEmail(),
+                dentista.getNumMatricula(),
+                dentista.getAtendeConvenio(),
+                dentista.getId());
+        execute(conn, query);
+        return dentista;
+    }
 
     // Excluir
     @Override
@@ -105,6 +148,19 @@ public class DentistaDaoH2 implements IDao<Dentista> {
                 rs.getInt("numMatricula"),
                 rs.getInt("atendeConvenio")
         );
+    }
+
+    private void execute(Connection conn, String query) {
+        try {
+            PreparedStatement ps = null;
+            ps = conn.prepareStatement(query);
+            ps.executeUpdate();
+            ps.close();
+            conn.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

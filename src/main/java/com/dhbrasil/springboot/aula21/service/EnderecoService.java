@@ -4,6 +4,7 @@ import com.dhbrasil.springboot.aula21.dao.IDao;
 import com.dhbrasil.springboot.aula21.model.Endereco;
 
 import java.util.List;
+import java.util.Optional;
 
 public class EnderecoService {
 
@@ -14,12 +15,19 @@ public class EnderecoService {
     }
 
     public Endereco salvar(Endereco endereco) {
-        enderecoIDao.salvar(endereco);
-        return endereco;
+        return enderecoIDao.salvar(endereco);
+    }
+
+    public Optional<Endereco> buscar(Integer id) {
+        return enderecoIDao.buscar(id);
     }
 
     public List<Endereco> buscarTodos() {
         return enderecoIDao.buscarTodos();
+    }
+
+    public Endereco atualizar(Endereco endereco) {
+        return enderecoIDao.atualizar(endereco);
     }
 
     public void excluir(Integer id) {

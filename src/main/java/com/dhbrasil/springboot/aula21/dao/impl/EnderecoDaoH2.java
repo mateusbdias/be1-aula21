@@ -7,6 +7,7 @@ import com.dhbrasil.springboot.aula21.model.Endereco;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class EnderecoDaoH2 implements IDao<Endereco> {
 
@@ -50,6 +51,30 @@ public class EnderecoDaoH2 implements IDao<Endereco> {
     }
 
     // Buscar por ID
+    @Override
+    public Optional<Endereco> buscar(Integer id) {
+        Connection conn = configJDBC.connectToDB();
+        Statement st = null;
+
+        String query = String.format(
+                "SELECT id, rua, numero, bairro, cidade, estado " +
+                "FROM enderecos WHERE id = '%s',", id);
+        Endereco endereco = null;
+
+        try {
+            st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                endereco = criarObjetoEndereco(rs);
+            }
+            st.close();
+            conn.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return endereco != null ? Optional.of(endereco) : Optional.empty();
+    }
 
     // Buscar todos os registros
     @Override
@@ -77,6 +102,22 @@ public class EnderecoDaoH2 implements IDao<Endereco> {
     }
 
     // Atualizar
+    @Override
+    public Endereco atualizar(Endereco endereco) {
+        Connection conn = configJDBC.connectToDB();
+        String query = String.format(
+                "UPDATE enderecos SET rua = '%s', numero = '%s', " +
+                "bairro = '%s', cidade = '%s', estado = '%s' " +
+                "WHERE id = '%s';",
+                endereco.getRua(),
+                endereco.getNumero(),
+                endereco.getBairro(),
+                endereco.getCidade(),
+                endereco.getEstado(),
+                endereco.getId());
+        execute(conn, query);
+        return endereco;
+    }
 
     // Excluir
     @Override
@@ -107,6 +148,19 @@ public class EnderecoDaoH2 implements IDao<Endereco> {
                 rs.getString("bairro"),
                 rs.getString("estado")
         );
+    }
+
+    private void execute(Connection conn, String query) {
+        try {
+            PreparedStatement ps = null;
+            ps = conn.prepareStatement(query);
+            ps.executeUpdate();
+            ps.close();
+            conn.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
