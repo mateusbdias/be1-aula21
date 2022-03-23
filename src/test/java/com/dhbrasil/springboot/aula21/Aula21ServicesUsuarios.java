@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class Aula21ServicesUsuarios {
@@ -45,6 +46,23 @@ class Aula21ServicesUsuarios {
 	@Test
 	public void excluirUsuarioComId1() {
 		usuarioService.excluir(1);
+	}
+
+	@Disabled
+	@Test
+	public void buscarUsuarioComId2() {
+		Optional<Usuario> u = usuarioService.buscar(2);
+		System.out.println(u);
+	}
+
+	@Disabled
+	@Test
+	public void atualizarUsuarioComId3() {
+		Usuario userAt = new Usuario(
+				3, "Renata Queiroz", "renata@mail.com",
+				"qwerty123", 3);
+		Usuario userUp = usuarioService.atualizar(userAt);
+		System.out.println(userUp);
 	}
 
 }

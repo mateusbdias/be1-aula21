@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class Aula21ServicesEnderecos {
@@ -39,6 +40,29 @@ class Aula21ServicesEnderecos {
 	public void listarTodosOsEnderecos() {
 		List<Endereco> enderecosList = enderecoService.buscarTodos();
 		System.out.println(enderecosList);
+	}
+
+	@Disabled
+	@Test
+	public void excluirEnderecoComId3() {
+		enderecoService.excluir(3);
+	}
+
+	@Disabled
+	@Test
+	public void buscarEnderecoComId1() {
+		Optional<Endereco> e = enderecoService.buscar(1);
+		System.out.println(e);
+	}
+
+	@Disabled
+	@Test
+	public void atualizarEnderecoComId2() {
+		Endereco endAt = new Endereco(
+				2, "Av. Sampaio Vidal", "440",
+				"Marília", "Centro", "SP");
+		Endereco endUp = enderecoService.atualizar(endAt);
+		System.out.println(endUp);
 	}
 
 }
