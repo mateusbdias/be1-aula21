@@ -4,6 +4,7 @@ import com.dhbrasil.springboot.aula21.dao.IDao;
 import com.dhbrasil.springboot.aula21.model.Usuario;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UsuarioService {
 
@@ -14,12 +15,19 @@ public class UsuarioService {
     }
 
     public Usuario salvar(Usuario usuario) {
-        usuarioIDao.salvar(usuario);
-        return usuario;
+        return usuarioIDao.salvar(usuario);
+    }
+
+    public Optional<Usuario> buscar(Integer id) {
+        return usuarioIDao.buscar(id);
     }
 
     public List<Usuario> buscarTodos() {
         return usuarioIDao.buscarTodos();
+    }
+
+    public Usuario atualizar(Usuario usuario) {
+        return usuarioIDao.atualizar(usuario);
     }
 
     public void excluir(Integer id) {

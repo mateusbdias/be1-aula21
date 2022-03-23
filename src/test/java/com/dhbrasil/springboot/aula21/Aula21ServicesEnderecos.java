@@ -3,6 +3,7 @@ package com.dhbrasil.springboot.aula21;
 import com.dhbrasil.springboot.aula21.dao.impl.EnderecoDaoH2;
 import com.dhbrasil.springboot.aula21.model.Endereco;
 import com.dhbrasil.springboot.aula21.service.EnderecoService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,6 +19,7 @@ class Aula21ServicesEnderecos {
 	void contextLoads() {
 	}
 
+	@Disabled
 	@Test
 	public void carregarTresEnderecos() {
 		Endereco e1 = new Endereco(
@@ -32,6 +34,7 @@ class Aula21ServicesEnderecos {
 		enderecoService.salvar(e3);
 	}
 
+	@Disabled
 	@Test
 	public void listarTodosOsEnderecos() {
 		List<Endereco> enderecosList = enderecoService.buscarTodos();

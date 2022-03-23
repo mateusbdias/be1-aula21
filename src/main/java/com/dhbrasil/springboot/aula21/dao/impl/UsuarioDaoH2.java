@@ -7,6 +7,7 @@ import com.dhbrasil.springboot.aula21.model.Usuario;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UsuarioDaoH2 implements IDao<Usuario> {
 
@@ -49,6 +50,30 @@ public class UsuarioDaoH2 implements IDao<Usuario> {
     }
 
     // Buscar por ID
+    @Override
+    public Optional<Usuario> buscar(Integer id) {
+        Connection conn = configJDBC.connectToDB();
+        Statement st = null;
+
+        String query = String.format(
+                "SELECT id, nome, email, senha, acesso " +
+                "FROM usuarios WHERE id = '%s';", id);
+        Usuario usuario = null;
+
+        try {
+            st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                usuario = criarObjetoUsuario(rs);
+            }
+            st.close();
+            conn.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usuario != null ? Optional.of(usuario) : Optional.empty();
+    }
 
     // Buscar todos os registros
     @Override
@@ -76,6 +101,21 @@ public class UsuarioDaoH2 implements IDao<Usuario> {
     }
 
     // Atualizar
+    @Override
+    public Usuario atualizar(Usuario usuario) {
+        Connection conn = configJDBC.connectToDB();
+        String query = String.format(
+                "UPDATE usuarios SET nome = '%s', email = '%s', " +
+                "senha = '%s', acesso = '%s' " +
+                "WHERE id = '%s';",
+                usuario.getNome(),
+                usuario.getEmail(),
+                usuario.getSenha(),
+                usuario.getAcesso(),
+                usuario.getId());
+        execute(conn, query);
+        return usuario;
+    }
 
     // Excluir
     @Override
@@ -105,6 +145,19 @@ public class UsuarioDaoH2 implements IDao<Usuario> {
                 rs.getString("senha"),
                 rs.getInt("acesso")
         );
+    }
+
+    private void execute(Connection conn, String query) {
+        try {
+            PreparedStatement ps = null;
+            ps = conn.prepareStatement(query);
+            ps.executeUpdate();
+            ps.close();
+            conn.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
