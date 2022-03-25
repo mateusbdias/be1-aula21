@@ -26,12 +26,12 @@ public class EnderecoDaoH2 implements IDao<Endereco> {
         PreparedStatement ps = null;
 
         String query = String.format("INSERT INTO enderecos " +
-                "(rua, numero, cidade, bairro, estado) " +
+                "(rua, numero, bairro, cidade, estado) " +
                 "VALUES ('%s', '%s', '%s', '%s', '%s')",
                 endereco.getRua(),
                 endereco.getNumero(),
-                endereco.getCidade(),
                 endereco.getBairro(),
+                endereco.getCidade(),
                 endereco.getEstado());
 
         try {
@@ -58,7 +58,7 @@ public class EnderecoDaoH2 implements IDao<Endereco> {
 
         String query = String.format(
                 "SELECT id, rua, numero, bairro, cidade, estado " +
-                "FROM enderecos WHERE id = '%s',", id);
+                "FROM enderecos WHERE id = '%s';", id);
         Endereco endereco = null;
 
         try {
@@ -144,8 +144,8 @@ public class EnderecoDaoH2 implements IDao<Endereco> {
                 rs.getInt("id"),
                 rs.getString("rua"),
                 rs.getString("numero"),
-                rs.getString("cidade"),
                 rs.getString("bairro"),
+                rs.getString("cidade"),
                 rs.getString("estado")
         );
     }

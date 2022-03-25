@@ -31,6 +31,14 @@ public class Paciente {
         this.endereco = endereco;
     }
 
+    public Paciente(Integer id, String nome, String sobrenome, String cpf, Endereco endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.cpf = cpf;
+        this.endereco = endereco;
+    }
+
     public Integer getId() {
         return id;
     }
